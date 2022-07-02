@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+function isDeviceAvailiable() {
+  const Bluetooth = require("webbluetooth").Bluetooth;
+  if (!Bluetooth.bluetooth) {
+    console.log("Bluetooth is not available!");
+    return false;
+  } else {
+    console.log("Bluetooth is available!");
+    return true;
+  }
+}
+
+function getDevice() {
+  var deviceName = "tren abuser";
+  let options = {
+    // acceptAllDevices: true,
+    filters: [{ name: deviceName }],
+  };
+  console.log("Requesting Device Info...");
+  navigator.bluetooth
+    .requestDevice(options)
+    .then((device) => {
+      console.log("Name: " + device.name);
+    })
+    .catch((error) => {
+      console.log("Error Message: " + error);
+    });
+}
+
+function listener() {
+  if (isDeviceAvailiable() == true) {
+    return getDevice();
+  }
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <button onClick={listener}>Connect</button>
     </div>
   );
 }
