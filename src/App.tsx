@@ -1,10 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 function isDeviceAvailiable() {
-  const Bluetooth = require("webbluetooth").Bluetooth;
-  if (!Bluetooth.bluetooth) {
+  if (!navigator.bluetooth) {
     console.log("Bluetooth is not available!");
     return false;
   } else {
@@ -14,10 +12,10 @@ function isDeviceAvailiable() {
 }
 
 function getDevice() {
-  var deviceName = "tren abuser";
+  // var deviceName = "tren abuser";
   let options = {
-    // acceptAllDevices: true,
-    filters: [{ name: deviceName }],
+    acceptAllDevices: true,
+    // filters: [{ name: deviceName }],
   };
   console.log("Requesting Device Info...");
   navigator.bluetooth
@@ -31,7 +29,7 @@ function getDevice() {
 }
 
 function listener() {
-  if (isDeviceAvailiable() == true) {
+  if (isDeviceAvailiable()) {
     return getDevice();
   }
 }
